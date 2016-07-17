@@ -1,0 +1,61 @@
+group 'com.tonitealive'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.0.3'
+    ext.springBootVersion = '1.4.0.RC1'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'spring-boot'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://m2.neo4j.org" }
+    maven { url "https://repo.spring.io/libs-release" }
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-data-neo4j"
+    compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.RC9.2'
+    compile 'org.neo4j:neo4j-ogm-embedded-driver:2.0.3'
+//    compile "org.springframework.data:spring-data-neo4j"
+//    compile 'org.springframework.data:spring-data-neo4j-rest:3.4.4.RELEASE'
+//    compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.RC9.2'
+//    compile 'org.neo4j:neo4j-ogm-core:2.0.3'
+//    compile 'org.neo4j:neo4j-ogm-embedded-driver:2.0.3'
+    compile 'com.cloudinary:cloudinary-http44:1.4.2'
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.springframework.security:spring-security-test"
+}
+
+// For Heroku
+task stage {
+    dependsOn build
+}
+stage.dependsOn test
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}

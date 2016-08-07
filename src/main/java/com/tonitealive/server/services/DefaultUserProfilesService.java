@@ -3,7 +3,7 @@ package com.tonitealive.server.services;
 import com.tonitealive.server.data.UserProfilesRepository;
 import com.tonitealive.server.data.entities.UserProfileEntity;
 import com.tonitealive.server.domain.exceptions.ResourceNotFoundException;
-import com.tonitealive.server.domain.models.UserProfileModel;
+import com.tonitealive.server.domain.models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Async;
@@ -29,7 +29,7 @@ public class DefaultUserProfilesService implements UserProfilesService {
 
     @Async
     @Override
-    public void createProfile(UserProfileModel profileModel) {
+    public void createProfile(UserProfile profileModel) {
         checkNotNull(profileModel);
 
         UserProfileEntity entity = conversionService.convert(profileModel, UserProfileEntity.class);
@@ -38,7 +38,7 @@ public class DefaultUserProfilesService implements UserProfilesService {
 
     @Async
     @Override
-    public Future<UserProfileModel> getProfileByUsername(String username) {
+    public Future<UserProfile> getProfileByUsername(String username) {
         checkNotNull(username);
         checkArgument(!username.isEmpty());
 
@@ -46,7 +46,7 @@ public class DefaultUserProfilesService implements UserProfilesService {
         if (entity == null)
             throw ResourceNotFoundException.create("UserProfile", username);
 
-        UserProfileModel model = conversionService.convert(entity, UserProfileModel.class);
+        UserProfile model = conversionService.convert(entity, UserProfile.class);
         return new AsyncResult<>(model);
     }
 }

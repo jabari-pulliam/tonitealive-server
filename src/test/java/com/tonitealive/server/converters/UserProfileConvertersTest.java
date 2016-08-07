@@ -1,7 +1,7 @@
 package com.tonitealive.server.converters;
 
 import com.tonitealive.server.data.entities.UserProfileEntity;
-import com.tonitealive.server.domain.models.UserProfileModel;
+import com.tonitealive.server.domain.models.UserProfile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserProfileConvertersTest {
         String username = "username";
         String email = "email";
         String photoUrl = "url";
-        UserProfileModel model = UserProfileModel.create(username, email, photoUrl);
+        UserProfile model = UserProfile.create(username, email, photoUrl);
 
         // When
         UserProfileEntity entity = conversionService.convert(model, UserProfileEntity.class);
@@ -44,12 +44,12 @@ public class UserProfileConvertersTest {
         UserProfileEntity entity = new UserProfileEntity(username, email, photoUrl);
 
         // When
-        UserProfileModel model = conversionService.convert(entity, UserProfileModel.class);
+        UserProfile model = conversionService.convert(entity, UserProfile.class);
 
         // Then
-        assertThat(model.getUsername()).isEqualTo(username);
-        assertThat(model.getEmail()).isEqualTo(email);
-        assertThat(model.getProfilePhotoUrl()).isEqualTo(photoUrl);
+        assertThat(model.username()).isEqualTo(username);
+        assertThat(model.email()).isEqualTo(email);
+        assertThat(model.profilePhotoUrl()).isEqualTo(photoUrl);
     }
 
 }

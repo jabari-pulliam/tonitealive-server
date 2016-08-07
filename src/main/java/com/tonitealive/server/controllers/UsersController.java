@@ -1,7 +1,7 @@
 package com.tonitealive.server.controllers;
 
 import com.tonitealive.server.domain.exceptions.InternalServerErrorException;
-import com.tonitealive.server.domain.models.UserProfileModel;
+import com.tonitealive.server.domain.models.UserProfile;
 import com.tonitealive.server.services.UserProfilesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +27,8 @@ public class UsersController {
     }
 
     @RequestMapping(value = "{username}", method = RequestMethod.GET)
-    public UserProfileModel getProfileByUsername(@PathVariable("username") String username) {
-        UserProfileModel profile;
+    public UserProfile getProfileByUsername(@PathVariable("username") String username) {
+        UserProfile profile;
         try {
             profile = userProfilesService.getProfileByUsername(username).get();
             return profile;

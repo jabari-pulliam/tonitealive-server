@@ -1,24 +1,24 @@
 package com.tonitealive.server.converters;
 
 import com.tonitealive.server.data.entities.UserProfileEntity;
-import com.tonitealive.server.domain.models.UserProfileModel;
+import com.tonitealive.server.domain.models.UserProfile;
 import org.springframework.core.convert.converter.Converter;
 
 public final class UserProfileConverters {
 
-    public static class ModelConverter implements Converter<UserProfileModel, UserProfileEntity> {
+    public static class ModelConverter implements Converter<UserProfile, UserProfileEntity> {
         @Override
-        public UserProfileEntity convert(UserProfileModel source) {
-            UserProfileEntity entity = new UserProfileEntity(source.getUsername(),
-                    source.getEmail(), source.getProfilePhotoUrl());
+        public UserProfileEntity convert(UserProfile source) {
+            UserProfileEntity entity = new UserProfileEntity(source.username(),
+                    source.email(), source.profilePhotoUrl());
             return entity;
         }
     }
 
-    public static class EntityConverter implements Converter<UserProfileEntity, UserProfileModel> {
+    public static class EntityConverter implements Converter<UserProfileEntity, UserProfile> {
         @Override
-        public UserProfileModel convert(UserProfileEntity source) {
-            UserProfileModel model = UserProfileModel.create(source.getUsername(),
+        public UserProfile convert(UserProfileEntity source) {
+            UserProfile model = UserProfile.create(source.getUsername(),
                     source.getEmail(), source.getProfilePhotoUrl());
             return model;
         }

@@ -1,6 +1,6 @@
 package com.tonitealive.server.services;
 
-import com.tonitealive.server.domain.models.UserProfileModel;
+import com.tonitealive.server.domain.models.UserProfile;
 
 import java.util.concurrent.Future;
 
@@ -14,15 +14,15 @@ public interface UserProfilesService {
      *
      * @param profileModel The profile
      */
-    void createProfile(UserProfileModel profileModel);
+    void createProfile(UserProfile profileModel);
 
     /**
      * Gets a user profile by its username
      *
      * @param username The username
-     * @return A future that will return a {@link UserProfileModel}
+     * @return A future that will return a {@link UserProfile}
      * @throws com.tonitealive.server.domain.exceptions.ResourceNotFoundException
      */
-    Future<UserProfileModel> getProfileByUsername(String username);
+    Future<UserProfile> getProfileByUsername(String username);
 
 }

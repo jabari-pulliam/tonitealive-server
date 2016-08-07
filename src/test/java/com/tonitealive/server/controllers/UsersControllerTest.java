@@ -1,10 +1,8 @@
 package com.tonitealive.server.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.tonitealive.server.data.UserProfilesRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tonitealive.server.data.entities.UserProfileEntity;
-import com.tonitealive.server.domain.models.UserProfileModel;
+import com.tonitealive.server.domain.models.UserProfile;
 import com.tonitealive.server.services.UserProfilesService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.json.GsonTester;
+import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,7 +24,6 @@ import java.util.concurrent.FutureTask;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,15 +34,15 @@ public class UsersControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private GsonTester<UserProfileModel> json;
+    private JacksonTester<UserProfile> json;
 
     @MockBean
     private UserProfilesService userProfilesService;
 
     @Before
     public void setup() {
-        Gson gson = new GsonBuilder().create();
-        GsonTester.initFields(this, gson);
+        ObjectMapper mapper = new ObjectMapper();
+        JacksonTester.initFields(this, mapper);
     }
 
     @Test
@@ -55,11 +52,11 @@ public class UsersControllerTest {
         String username = "user";
         String email = "email";
         UserProfileEntity profile = new UserProfileEntity(username, email, null);
-        UserProfileModel model = UserProfileModel.create(username, email, null);
-        given(userProfilesService.getProfileByUsername(username)).willAnswer(new Answer<Future<UserProfileModel>>() {
+        UserProfile model = UserProfile.create(username, email, null);
+        given(userProfilesService.getProfileByUsername(username)).willAnswer(new Answer<Future<UserProfile>>() {
             @Override
-            public Future<UserProfileModel> answer(InvocationOnMock invocation) throws Throwable {
-                Future<UserProfileModel> future = mock(FutureTask.class);
+            public Future<UserProfile> answer(InvocationOnMock invocation) throws Throwable {
+                Future<UserProfile> future = mock(FutureTask.class);
                 Mockito.when(future.get()).thenReturn(model);
                 return future;
             }

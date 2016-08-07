@@ -38,9 +38,10 @@ dependencies {
     compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.RC9.2'
     compile 'org.neo4j:neo4j-ogm-embedded-driver:2.0.3'
     compile 'com.cloudinary:cloudinary-http44:1.4.2'
-    compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
     compile 'com.google.guava:guava:19.0'
+    compileOnly "com.google.auto.value:auto-value:1.2"
+    apt "com.google.auto.value:auto-value:1.2"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.springframework.boot:spring-boot-starter-test"

@@ -1,4 +1,4 @@
-package com.tonitealive.server.data;
+package com.tonitealive.server.data.repositories;
 
 import com.tonitealive.server.data.entities.UserProfileEntity;
 import org.springframework.data.neo4j.repository.GraphRepository;

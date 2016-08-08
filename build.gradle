@@ -21,6 +21,7 @@ apply plugin: 'java'
 apply plugin: "net.ltgt.apt"
 apply plugin: 'spring-boot'
 apply plugin: 'idea'
+apply plugin: "jacoco"
 
 repositories {
     mavenCentral()
@@ -42,6 +43,7 @@ dependencies {
     compile 'com.google.guava:guava:19.0'
     compileOnly "com.google.auto.value:auto-value:1.2"
     apt "com.google.auto.value:auto-value:1.2"
+    compile 'io.reactivex:rxjava:1.1.8'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.springframework.boot:spring-boot-starter-test"

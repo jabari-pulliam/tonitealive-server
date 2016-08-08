@@ -6,11 +6,11 @@ import com.tonitealive.server.services.UserProfilesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
@@ -29,13 +29,14 @@ public class UsersController {
     @RequestMapping(value = "{username}", method = RequestMethod.GET)
     public UserProfile getProfileByUsername(@PathVariable("username") String username) {
         UserProfile profile;
-        try {
-            profile = userProfilesService.getProfileByUsername(username).get();
-            return profile;
-        } catch (InterruptedException | CancellationException | ExecutionException e) {
-            log.error("Failed to get user profile", e);
-            throw InternalServerErrorException.create();
-        }
+        return null;
+    }
+
+    @RequestMapping(value = "{username}/profilePhoto", method = RequestMethod.POST)
+    public ResponseEntity<Void> saveProfilePhoto(@PathVariable String username,
+                                                 @RequestParam("photo") MultipartFile imageFile) throws IOException {
+        // TODO: Implement
+        return null;
     }
 
 }

@@ -19,7 +19,7 @@ public abstract class UserProfile {
     public abstract String profilePhotoUrl();
 
     public static UserProfile create(String username, String email, @Nullable String profilePhotoUrl) {
-        return null;
+        return new AutoValue_UserProfile(username, email, profilePhotoUrl);
     }
 
 }

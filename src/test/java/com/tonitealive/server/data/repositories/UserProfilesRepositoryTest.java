@@ -1,6 +1,7 @@
-package com.tonitealive.server.data;
+package com.tonitealive.server.data.repositories;
 
 import com.tonitealive.server.data.entities.UserProfileEntity;
+import com.tonitealive.server.data.repositories.UserProfilesRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

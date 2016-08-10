@@ -9,12 +9,11 @@ public class UserProfileEntity {
     @GraphId private Long id;
     private String username;
     private String email;
-    private String profilePhotoUrl;
+    private ImageEntity profilePhoto;
 
-    public UserProfileEntity(String username, String email, String profilePhotoUrl) {
+    public UserProfileEntity(String username, String email) {
         this.username = username;
         this.email = email;
-        this.profilePhotoUrl = profilePhotoUrl;
     }
 
     public Long getId() {
@@ -37,12 +36,12 @@ public class UserProfileEntity {
         this.email = email;
     }
 
-    public String getProfilePhotoUrl() {
-        return profilePhotoUrl;
+    public ImageEntity getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public void setProfilePhotoUrl(String profilePhotoUrl) {
-        this.profilePhotoUrl = profilePhotoUrl;
+    public void setProfilePhoto(ImageEntity profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
 

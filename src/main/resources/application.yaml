@@ -1,3 +1,7 @@
+tonitealive:
+  filestoreservice:
+    rootFolder: production
+
 stormpath:
   client:
     cacheManager:
@@ -19,6 +23,10 @@ spring:
 spring:
   profiles:
     active: dev
+
+tonitealive:
+  filestoreservice:
+    rootFolder: development
 
 stormpath:
   application:

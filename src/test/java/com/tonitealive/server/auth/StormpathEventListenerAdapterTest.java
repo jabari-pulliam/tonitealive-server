@@ -31,7 +31,7 @@ public class StormpathEventListenerAdapterTest {
         // Given
         String username = "username";
         String email = "email";
-        UserProfile profile = UserProfile.create(username, email, null);
+        UserProfile profile = UserProfile.create(username, email);
         Account mockAccount = mock(Account.class);
         RegisteredAccountRequestEvent mockEvent = mock(RegisteredAccountRequestEvent.class);
 

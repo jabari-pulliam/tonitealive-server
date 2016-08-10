@@ -1,7 +1,6 @@
 package com.tonitealive.server.data.repositories;
 
 import com.tonitealive.server.data.entities.UserProfileEntity;
-import com.tonitealive.server.data.repositories.UserProfilesRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,10 +39,10 @@ public class UserProfilesRepositoryTest {
         emails.add("email4");
 
         profiles = new ArrayList<>();
-        profiles.add(new UserProfileEntity("user1", "email1", "url"));
-        profiles.add(new UserProfileEntity("user2", "email2", "url"));
-        profiles.add(new UserProfileEntity("user3", "email3", "url"));
-        profiles.add(new UserProfileEntity("user4", "email4", "url"));
+        profiles.add(new UserProfileEntity("user1", "email1"));
+        profiles.add(new UserProfileEntity("user2", "email2"));
+        profiles.add(new UserProfileEntity("user3", "email3"));
+        profiles.add(new UserProfileEntity("user4", "email4"));
 
         userProfilesRepository.save(profiles);
     }

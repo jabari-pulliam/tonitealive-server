@@ -1,40 +1,37 @@
 package com.tonitealive.server.services;
 
-import com.tonitealive.server.data.repositories.FilesRepository;
-import com.tonitealive.server.data.repositories.UserProfilesRepository;
 import com.tonitealive.server.data.entities.UserProfileEntity;
+import com.tonitealive.server.data.repositories.UserProfilesRepository;
 import com.tonitealive.server.domain.exceptions.ResourceNotFoundException;
 import com.tonitealive.server.domain.models.UserProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import rx.Observable;
 
-import java.util.concurrent.Future;
+import java.io.File;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.json.XMLTokener.entity;
 
 @Service
 public class DefaultUserProfilesService implements UserProfilesService {
 
+    private static final String TMP_FILE_PREFIX = "TA_";
+    private static final Logger log = LoggerFactory.getLogger(DefaultUserProfilesService.class);
+
     private final UserProfilesRepository repository;
     private final ConversionService conversionService;
-    private final FilesRepository filesRepository;
 
     @Autowired
-    public DefaultUserProfilesService(UserProfilesRepository repository, FilesRepository filesRepository,
+    public DefaultUserProfilesService(UserProfilesRepository repository,
                                       ConversionService conversionService) {
         this.repository = repository;
         this.conversionService = conversionService;
-        this.filesRepository = filesRepository;
     }
 
-    @Async
     @Override
     public Observable<Void> createProfile(UserProfile profileModel) {
         checkNotNull(profileModel);
@@ -48,7 +45,6 @@ public class DefaultUserProfilesService implements UserProfilesService {
         });
     }
 
-    @Async
     @Override
     public Observable<UserProfile> getProfileByUsername(String username) {
         checkNotNull(username);
@@ -57,6 +53,7 @@ public class DefaultUserProfilesService implements UserProfilesService {
             UserProfileEntity entity = repository.findByUsername(username);
             if (!subscriber.isUnsubscribed()) {
                 if (entity == null) {
+                    log.error("Failed to get user profile");
                     subscriber.onError(ResourceNotFoundException.create("UserProfile", username));
                 } else {
                     UserProfile model = conversionService.convert(entity, UserProfile.class);
@@ -67,21 +64,13 @@ public class DefaultUserProfilesService implements UserProfilesService {
         });
     }
 
-    @Async
     @Override
-    public Observable<UserProfile> updateProfilePhoto(String username, MultipartFile profilePhoto) {
+    public String updateProfilePhoto(String username, File profilePhoto) {
         checkNotNull(username);
         checkArgument(!username.isEmpty());
         checkNotNull(profilePhoto);
 
-        // Transform the image file
-
-
-        // Store the image file
-
-
-        //
-
+        // TODO: Fix
         return null;
     }
 }

@@ -51,8 +51,8 @@ public class UsersControllerTest {
         // Given
         String username = "user";
         String email = "email";
-        UserProfileEntity profile = new UserProfileEntity(username, email, null);
-        UserProfile model = UserProfile.create(username, email, null);
+        UserProfileEntity profile = new UserProfileEntity(username, email);
+        UserProfile model = UserProfile.create(username, email);
         given(userProfilesService.getProfileByUsername(username)).willAnswer(new Answer<Future<UserProfile>>() {
             @Override
             public Future<UserProfile> answer(InvocationOnMock invocation) throws Throwable {

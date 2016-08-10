@@ -1,10 +1,9 @@
 package com.tonitealive.server.services;
 
 import com.tonitealive.server.domain.models.UserProfile;
-import org.springframework.web.multipart.MultipartFile;
 import rx.Observable;
 
-import java.util.concurrent.Future;
+import java.io.File;
 
 /**
  * Manages user profiles.
@@ -32,10 +31,10 @@ public interface UserProfilesService {
      *
      * @param username The username
      * @param profilePhoto The profile photo file
-     * @return The updated user profile
+     * @return The profile photo URL
      * @throws com.tonitealive.server.domain.exceptions.ResourceNotFoundException Thrown if there is no user with the
      * username
      */
-    Observable<UserProfile> updateProfilePhoto(String username, MultipartFile profilePhoto);
+    String updateProfilePhoto(String username, File profilePhoto);
 
 }

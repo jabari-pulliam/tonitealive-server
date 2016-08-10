@@ -23,8 +23,7 @@ public class UserProfileConvertersTest {
         // Given
         String username = "username";
         String email = "email";
-        String photoUrl = "url";
-        UserProfile model = UserProfile.create(username, email, photoUrl);
+        UserProfile model = UserProfile.create(username, email);
 
         // When
         UserProfileEntity entity = conversionService.convert(model, UserProfileEntity.class);
@@ -32,7 +31,6 @@ public class UserProfileConvertersTest {
         // Then
         assertThat(entity.getUsername()).isEqualTo(username);
         assertThat(entity.getEmail()).isEqualTo(email);
-        assertThat(entity.getProfilePhotoUrl()).isEqualTo(photoUrl);
     }
 
     @Test
@@ -40,8 +38,7 @@ public class UserProfileConvertersTest {
         // Given
         String username = "username";
         String email = "email";
-        String photoUrl = "url";
-        UserProfileEntity entity = new UserProfileEntity(username, email, photoUrl);
+        UserProfileEntity entity = new UserProfileEntity(username, email);
 
         // When
         UserProfile model = conversionService.convert(entity, UserProfile.class);
@@ -49,7 +46,6 @@ public class UserProfileConvertersTest {
         // Then
         assertThat(model.username()).isEqualTo(username);
         assertThat(model.email()).isEqualTo(email);
-        assertThat(model.profilePhotoUrl()).isEqualTo(photoUrl);
     }
 
 }

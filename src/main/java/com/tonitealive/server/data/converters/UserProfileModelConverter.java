@@ -7,8 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 public class UserProfileModelConverter implements Converter<UserProfile, UserProfileEntity> {
     @Override
     public UserProfileEntity convert(UserProfile source) {
-        UserProfileEntity entity = new UserProfileEntity(source.username(),
-                source.email(), source.profilePhotoUrl());
+        UserProfileEntity entity = new UserProfileEntity(source.username(), source.email());
         return entity;
     }
 }

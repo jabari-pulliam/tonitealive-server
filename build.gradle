@@ -34,6 +34,7 @@ repositories {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
+    compile 'org.springframework.boot:spring-boot-starter-aop'
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-data-neo4j"
     compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.RC9.2'

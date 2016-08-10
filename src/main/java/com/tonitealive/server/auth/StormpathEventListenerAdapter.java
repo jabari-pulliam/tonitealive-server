@@ -28,7 +28,7 @@ public class StormpathEventListenerAdapter extends RequestEventListenerAdapter {
 
         // Create a new user profile from the account
         Account account = e.getAccount();
-        UserProfile profile = UserProfile.create(account.getUsername(), account.getEmail(), null);
+        UserProfile profile = UserProfile.create(account.getUsername(), account.getEmail());
         userProfilesService.createProfile(profile);
     }
 }

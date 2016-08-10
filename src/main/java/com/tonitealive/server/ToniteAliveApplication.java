@@ -2,10 +2,10 @@ package com.tonitealive.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
-@EnableAsync
+@EnableAspectJAutoProxy
 public class ToniteAliveApplication {
 
     public static void main(String[] args) {

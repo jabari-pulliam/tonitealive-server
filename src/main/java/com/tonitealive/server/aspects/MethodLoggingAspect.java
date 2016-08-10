@@ -26,7 +26,7 @@ public class MethodLoggingAspect {
 
         stopWatch.stop();
 
-        StringBuffer message = new StringBuffer();
+        StringBuilder message = new StringBuilder();
         message.append(joinPoint.getTarget().getClass().getName());
         message.append(".");
         message.append(joinPoint.getSignature().getName());
@@ -34,8 +34,8 @@ public class MethodLoggingAspect {
 
         // Append args
         Object[] args = joinPoint.getArgs();
-        for (int i = 0; i < args.length; i++)
-            message.append(args[i]).append(",");
+        for (Object arg : args)
+            message.append(arg).append(",");
 
         if (args.length > 0)
             message.deleteCharAt(message.length() - 1);

@@ -1,3 +1,5 @@
+# Production profile configuration
+
 tonitealive:
   filestoreservice:
     rootFolder: production
@@ -18,11 +20,17 @@ spring:
     converters:
       preferred-json-mapper: jackson
 
+  output:
+    ansi:
+      enabled: detect
+
 ---
+# Debug profile configuration
 
 spring:
   profiles:
     active: dev
+
 
 tonitealive:
   filestoreservice:
@@ -37,3 +45,8 @@ stormpath:
       admin: https://api.stormpath.com/v1/groups/2mJuLDpWc7EPcTsdk3YKnd
       user: https://api.stormpath.com/v1/groups/ciqlYQj0D9WMDU6OGLBT1
       promoter: https://api.stormpath.com/v1/groups/1PqTvjjylp01wvqiNZGif7
+
+logging:
+  level:
+    com.tonitealive.server: DEBUG
+

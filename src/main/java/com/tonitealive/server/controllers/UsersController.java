@@ -1,5 +1,6 @@
 package com.tonitealive.server.controllers;
 
+import com.tonitealive.server.annotations.DebugLog;
 import com.tonitealive.server.domain.exceptions.InternalServerErrorException;
 import com.tonitealive.server.domain.models.UserProfile;
 import com.tonitealive.server.services.UserProfilesService;
@@ -21,23 +22,24 @@ public class UsersController {
     private final UserProfilesService userProfilesService;
 
     private static final String TMP_FILE_PREFIX = "TMP_";
-    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public UsersController(UserProfilesService userProfilesService) {
         this.userProfilesService = userProfilesService;
     }
 
+    @DebugLog
     @RequestMapping(value = "{username}", method = RequestMethod.GET)
     public UserProfile getProfileByUsername(@PathVariable("username") String username) {
-        UserProfile profile;
-        return null;
+        return userProfilesService.getProfileByUsername(username);
     }
 
+    @DebugLog
     @RequestMapping(value = "{username}/profilePhoto", method = RequestMethod.POST)
     public ResponseEntity<Void> saveProfilePhoto(@PathVariable String username,
                                                  @RequestParam("photo") MultipartFile imageFile) {
-        File tmpFile = null;
+        File tmpFile;
         try {
             tmpFile = File.createTempFile(TMP_FILE_PREFIX, null);
             imageFile.transferTo(tmpFile);
@@ -46,14 +48,12 @@ public class UsersController {
             throw InternalServerErrorException.create();
         }
 
-        if (tmpFile != null) {
-            userProfilesService.updateProfilePhoto(username, tmpFile);
+        userProfilesService.updateProfilePhoto(username, tmpFile);
 
-            // Delete the temp file
-            FileUtils.deleteQuietly(tmpFile);
-        }
+        // Delete the temp file
+        FileUtils.deleteQuietly(tmpFile);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
     }
 
 }

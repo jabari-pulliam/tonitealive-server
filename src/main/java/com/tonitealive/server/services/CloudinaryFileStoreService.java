@@ -102,6 +102,7 @@ public class CloudinaryFileStoreService implements FileStoreService {
                 Transformation transformation = new Transformation().width(width).height(height).crop("fit");
                 url = url.transformation(transformation);
             }
+            log.debug("Got URL for {}", publicId);
             return url.generate(publicId);
         } catch (Throwable ex) {
             log.error("Could not get URL for image with public id: {}", publicId, ex);

@@ -31,6 +31,8 @@ public class StormpathEventListenerAdapter extends RequestEventListenerAdapter {
         Account account = e.getAccount();
         createNewUserAccountUseCase.execute(account.getUsername(), account.getEmail())
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe(value -> {}, error -> {
+                    log.error("Failed to create new user account", error);
+                });
     }
 }

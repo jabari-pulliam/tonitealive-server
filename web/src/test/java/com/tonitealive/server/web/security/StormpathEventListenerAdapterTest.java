@@ -3,13 +3,13 @@ package com.tonitealive.server.web.security;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.servlet.account.event.RegisteredAccountRequestEvent;
 import com.tonitealive.server.domain.interactors.CreateNewUserAccountUseCase;
-import com.tonitealive.server.domain.models.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import rx.Observable;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -21,7 +21,7 @@ public class StormpathEventListenerAdapterTest {
 
     private StormpathEventListenerAdapter adapter;
 
-    @SpyBean
+    @MockBean
     private CreateNewUserAccountUseCase createNewUserAccountUseCase;
 
     @Before
@@ -34,13 +34,14 @@ public class StormpathEventListenerAdapterTest {
         // Given
         String username = "username";
         String email = "email";
-        UserProfile profile = UserProfile.create(username, email);
         Account mockAccount = mock(Account.class);
         RegisteredAccountRequestEvent mockEvent = mock(RegisteredAccountRequestEvent.class);
+        Observable<Void> testObservable = Observable.create(subscriber -> subscriber.onCompleted());
 
         given(mockAccount.getUsername()).willReturn(username);
         given(mockAccount.getEmail()).willReturn(email);
         given(mockEvent.getAccount()).willReturn(mockAccount);
+        given(createNewUserAccountUseCase.execute(username, email)).willReturn(testObservable);
 
         // When
         adapter.on(mockEvent);

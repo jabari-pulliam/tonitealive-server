@@ -6,11 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Profile({Profiles.DEV, Profiles.TEST})
 @Configuration
-@EnableTransactionManagement
 public class DevDatabaseConfig extends Neo4jConfiguration {
 
     @Bean

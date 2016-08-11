@@ -1,0 +1,8 @@
+
+dependencies {
+    compile project(":infrastructure")
+    compile project(":domain")
+
+    compile "org.springframework.boot:spring-boot-starter-data-neo4j"
+    compile 'org.neo4j:neo4j-ogm-embedded-driver:2.0.3'
+}

@@ -1,2 +1,6 @@
 rootProject.name = 'tonitealive-server'
+include 'domain'
+include 'web'
+include 'data'
+include 'infrastructure'
 

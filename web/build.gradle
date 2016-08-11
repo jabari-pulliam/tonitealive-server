@@ -1,0 +1,13 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(":infrastructure")
+    compile project(":domain")
+    compile project(":data")
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.RC9.2'
+
+    testCompile "org.springframework.security:spring-security-test"
+}

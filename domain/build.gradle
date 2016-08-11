@@ -1,0 +1,14 @@
+
+dependencies {
+    compile project(":infrastructure")
+
+    compile 'org.springframework.boot:spring-boot-starter-aop'
+    compileOnly "com.google.auto.value:auto-value:1.2"
+    apt "com.google.auto.value:auto-value:1.2"
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.1'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'com.cloudinary:cloudinary-http44:1.4.2'
+    compile 'joda-time:joda-time:2.9.4'
+    compile 'io.reactivex:rxjava:1.1.8'
+}

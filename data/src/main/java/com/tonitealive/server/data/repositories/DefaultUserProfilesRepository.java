@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 
 @Repository
-public class DefaultUserProfilesRepository implements UserProfilesRepository {
+class DefaultUserProfilesRepository implements UserProfilesRepository {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 

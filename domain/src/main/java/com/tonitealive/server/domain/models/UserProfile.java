@@ -14,7 +14,8 @@ public abstract class UserProfile {
     public abstract String email();
 
     @JsonCreator
-    public static UserProfile create(String username, String email) {
+    public static UserProfile create(@JsonProperty("username") String username,
+                                     @JsonProperty("email") String email) {
         return new AutoValue_UserProfile(username, email);
     }
 

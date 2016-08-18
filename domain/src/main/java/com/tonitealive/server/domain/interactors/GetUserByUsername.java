@@ -3,15 +3,17 @@ package com.tonitealive.server.domain.interactors;
 import com.tonitealive.server.domain.models.UserProfile;
 import com.tonitealive.server.domain.repositories.UserProfilesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GetUserByUsernameUseCase {
+@Component
+public class GetUserByUsername {
 
     private final UserProfilesRepository userProfilesRepository;
 
     @Autowired
-    public GetUserByUsernameUseCase(UserProfilesRepository userProfilesRepository) {
+    public GetUserByUsername(UserProfilesRepository userProfilesRepository) {
         this.userProfilesRepository = userProfilesRepository;
     }
 

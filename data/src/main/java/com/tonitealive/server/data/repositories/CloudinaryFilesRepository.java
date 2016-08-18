@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Repository
-public class CloudinaryFilesRepository implements FilesRepository {
+class CloudinaryFilesRepository implements FilesRepository {
 
     private static final String SERVICE_NAME = "cloudinary";
     private static final String DEFAULT_IMG_FORMAT = "png";

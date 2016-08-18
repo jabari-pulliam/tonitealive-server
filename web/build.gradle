@@ -1,13 +1,29 @@
+plugins {
+    id 'org.unbroken-dome.test-sets' version '1.2.0'
+    id 'net.ltgt.apt' version '0.7'
+    id "jacoco"
+}
+
 apply plugin: 'spring-boot'
+
+testSets {
+    integrationTest
+}
 
 dependencies {
     compile project(":infrastructure")
     compile project(":domain")
-    compile project(":data")
+    runtime project(":data")
 
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-security"
-    compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.RC9.2'
+    compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.2'
+    compile 'commons-io:commons-io:2.5'
+    compile 'com.jakewharton.byteunits:byteunits:0.9.1'
 
     testCompile "org.springframework.security:spring-security-test"
+
+    integrationTestCompile 'com.squareup.retrofit2:retrofit:2.1.0'
+    integrationTestCompile 'com.squareup.retrofit2:converter-jackson:2.1.0'
+    integrationTestCompile 'org.mockito:mockito-core:2.0.93-beta'
 }

@@ -14,7 +14,6 @@ buildscript {
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.7"
     }
 }
 
@@ -28,6 +27,8 @@ allprojects {
 }
 
 subprojects {
+
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -48,8 +49,8 @@ subprojects {
         maven { url "https://repo.spring.io/milestone" }
     }
 
-    apply plugin: "net.ltgt.apt"
-    apply plugin: "jacoco"
+    //apply plugin: "net.ltgt.apt"
+    //apply plugin: "jacoco"
 
     dependencies {
         compile 'com.google.guava:guava:19.0'

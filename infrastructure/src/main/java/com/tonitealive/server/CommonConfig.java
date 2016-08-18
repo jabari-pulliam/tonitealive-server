@@ -1,9 +1,9 @@
 package com.tonitealive.server;
 
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-@SpringBootConfiguration
+@Configuration
 @EnableAspectJAutoProxy
-public class InfrastructureConfig {
+public class CommonConfig {
 }

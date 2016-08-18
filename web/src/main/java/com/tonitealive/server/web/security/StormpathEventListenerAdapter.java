@@ -35,4 +35,5 @@ public class StormpathEventListenerAdapter extends RequestEventListenerAdapter {
                     log.error("Failed to create new user account", error);
                 });
     }
+
 }

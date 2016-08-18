@@ -1,21 +1,26 @@
-package com.tonitealive.server.controllers;
+package com.tonitealive.server.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tonitealive.server.data.entities.UserProfileNode;
+import com.tonitealive.server.Profiles;
+import com.tonitealive.server.domain.exceptions.ResourceNotFoundException;
+import com.tonitealive.server.domain.interactors.GetUserByUsername;
+import com.tonitealive.server.domain.interactors.UpdateUserProfilePhoto;
 import com.tonitealive.server.domain.models.UserProfile;
-import com.tonitealive.server.web.controllers.UsersController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,10 +28,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UsersController.class)
+@ActiveProfiles(Profiles.TEST)
 public class UsersControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private GetUserByUsername getUserByUsername;
+
+    @MockBean
+    private UpdateUserProfilePhoto updateUserProfilePhoto;
 
     private JacksonTester<UserProfile> json;
 
@@ -42,8 +54,8 @@ public class UsersControllerTest {
         // Given
         String username = "user";
         String email = "email";
-        UserProfileNode profile = new UserProfileNode(username, email);
-        UserProfile model = UserProfile.create(username, email);
+        UserProfile profile = UserProfile.create(username, email);
+        given(getUserByUsername.execute(username)).willReturn(profile);
 
         // When
         mockMvc.perform(get("/users/" + username))
@@ -55,8 +67,11 @@ public class UsersControllerTest {
     @Test
     @WithMockUser
     public void getProfileByUsername_withUsernameDoesNotExist_shouldReturn404() throws Exception {
+
+
         // Given
         String username = "user";
+        given(getUserByUsername.execute(username)).willThrow(ResourceNotFoundException.create("UserProfile", username));
 
         // When
         mockMvc.perform(get("/users/" + username))
@@ -73,8 +88,6 @@ public class UsersControllerTest {
         // When
         mockMvc.perform(fileUpload("/users/" + username + "/profilePhoto").file(imageFile))
                 .andExpect(status().isOk());
-
-        // Then
     }
 
 }

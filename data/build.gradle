@@ -1,3 +1,8 @@
+plugins {
+    id 'org.unbroken-dome.test-sets' version '1.2.0'
+    id 'net.ltgt.apt' version '0.7'
+    id "jacoco"
+}
 
 dependencies {
     compile project(":infrastructure")

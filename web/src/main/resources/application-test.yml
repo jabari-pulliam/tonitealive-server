@@ -1,4 +1,8 @@
 # Debug profile configuration
+tonitealive:
+  filestoreservice:
+    rootFolder: test
+
 stormpath:
   application:
     href: https://api.stormpath.com/v1/applications/5l8ew1CAGoh1Um0mr7gAQY

@@ -9,3 +9,7 @@ stormpath:
       user: https://api.stormpath.com/v1/groups/5q9Hkh3lN221LYraSLx6XY
       promoter: https://api.stormpath.com/v1/groups/6A9pheRSMbDLWRvLoB98JE
 
+server:
+  compression:
+    enabled: true
+    mime-types: application/json

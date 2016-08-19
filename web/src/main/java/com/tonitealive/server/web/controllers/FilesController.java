@@ -1,5 +1,6 @@
 package com.tonitealive.server.web.controllers;
 
+import com.tonitealive.server.annotations.DebugLog;
 import com.tonitealive.server.domain.interactors.GetUrlForImage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class FilesController {
         this.getUrlForImage = getUrlForImage;
     }
 
+    @DebugLog
     @GetMapping("/images")
     public String getUrlForImage(@RequestParam("fileId") String fileId,
                                  @RequestParam("width") int viewportWidth,

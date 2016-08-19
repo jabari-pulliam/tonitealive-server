@@ -52,6 +52,13 @@ class DefaultUserProfilesRepository implements UserProfilesRepository {
             log.debug("Not profile found for username: {}", username);
             throw ResourceNotFoundException.create("UserProfile", username);
         }
+
+        FileNode profilePhotoNode = node.getProfilePhoto();
+        if (profilePhotoNode != null) {
+            filesRepository.deleteFile(profilePhotoNode.getFileId(), true);
+            fileNodesRepository.delete(profilePhotoNode);
+            node.setProfilePhoto(null);
+        }
         userProfileNodesRepository.delete(node);
     }
 
@@ -63,7 +70,13 @@ class DefaultUserProfilesRepository implements UserProfilesRepository {
             log.debug("No profile found for username: {}", username);
             throw ResourceNotFoundException.create("UserProfile", username);
         } else {
-            return conversionService.convert(node, UserProfile.class);
+            UserProfile profile = conversionService.convert(node, UserProfile.class);
+            FileNode profilePhotoNode = node.getProfilePhoto();
+            if (profilePhotoNode != null)
+                profile = UserProfile.create(profile.username(),
+                        profile.email(),
+                        profilePhotoNode.getFileId());
+            return profile;
         }
     }
 

@@ -26,7 +26,7 @@ public class CreateNewUserAccountUseCase {
         checkArgument(!email.isEmpty());
 
         return Observable.create(subscriber -> {
-            UserProfile profile = UserProfile.create(username, email);
+            UserProfile profile = UserProfile.create(username, email, null);
             userProfilesRepository.save(profile);
 
             if (!subscriber.isUnsubscribed())

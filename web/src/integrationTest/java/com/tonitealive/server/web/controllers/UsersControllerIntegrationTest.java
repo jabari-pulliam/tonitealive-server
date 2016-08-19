@@ -4,6 +4,10 @@ import com.tonitealive.server.Profiles;
 import com.tonitealive.server.domain.models.UserProfile;
 import com.tonitealive.server.domain.repositories.UserProfilesRepository;
 import com.tonitealive.server.web.testutil.IntegrationTestBase;
+import com.tonitealive.server.web.testutil.LoginUtil;
+import com.tonitealive.server.web.testutil.TestApi;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import org.junit.After;
 import org.junit.Before;
@@ -31,11 +35,19 @@ public class UsersControllerIntegrationTest extends IntegrationTestBase {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private TestApi testApi;
+
+    @Autowired
+    private LoginUtil loginUtil;
+
     private String[] usernames = {"user1", "user2", "user3", "user4"};
     private String[] emails = {"foo1@bar.coom", "foo2@bar.com", "foo3@bar.com", "foo4@bar.com"};
 
     @Before
     public void setup() throws IOException {
+        loginUtil.login();
+
         for (int i = 0; i < usernames.length; i++) {
             userProfilesRepository.save(UserProfile.create(usernames[i], emails[i]));
         }
@@ -43,7 +55,7 @@ public class UsersControllerIntegrationTest extends IntegrationTestBase {
 
     @After
     public void tearDown() throws IOException {
-
+        loginUtil.logout();
     }
 
     @Test
@@ -52,7 +64,7 @@ public class UsersControllerIntegrationTest extends IntegrationTestBase {
         String username = usernames[0];
 
         // When
-        Response<UserProfile> response = getTestApi().getUserByUsername(username).execute();
+        Response<UserProfile> response = testApi.getUserByUsername(username).execute();
 
         // Then
         assertThat(response.code()).isEqualTo(200);
@@ -66,7 +78,7 @@ public class UsersControllerIntegrationTest extends IntegrationTestBase {
         String username = "nothing";
 
         // When
-        Response<UserProfile> response = getTestApi().getUserByUsername(username).execute();
+        Response<UserProfile> response = testApi.getUserByUsername(username).execute();
 
         // Then
         assertThat(response.code()).isEqualTo(404);
@@ -78,13 +90,23 @@ public class UsersControllerIntegrationTest extends IntegrationTestBase {
         String usernamme = usernames[0];
         Resource testImageResource = context.getResource("classpath:images/test_image.jpg");
         File imageFile = testImageResource.getFile();
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("image/*"), imageFile);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
 
         // When
-        Response<Void> response = getTestApi().uploadProfilePhoto(usernamme, body).execute();
+        Response<Void> response = testApi.uploadProfilePhoto(usernamme, filePart).execute();
+        Response<UserProfile> userProfileResponse = testApi.getUserByUsername(usernamme).execute();
+        UserProfile profile = userProfileResponse.body();
+
+        assertThat(profile).isNotNull();
+        assertThat(profile.profilePhotoId()).isNotNull();
+        Response<String> photoUrlResponse = testApi.getUrlForImage(userProfileResponse.body().profilePhotoId(),
+                200,200).execute();
 
         // Then
         assertThat(response.code()).isEqualTo(201);
+        assertThat(photoUrlResponse.code()).isEqualTo(200);
+        assertThat(photoUrlResponse.body()).isNotEmpty();
     }
 
 }

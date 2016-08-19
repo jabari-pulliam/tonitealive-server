@@ -20,10 +20,13 @@ dependencies {
     compile 'com.stormpath.spring:stormpath-default-spring-boot-starter:1.0.2'
     compile 'commons-io:commons-io:2.5'
     compile 'com.jakewharton.byteunits:byteunits:0.9.1'
+    compile 'commons-fileupload:commons-fileupload:1.3.2'
 
     testCompile "org.springframework.security:spring-security-test"
 
     integrationTestCompile 'com.squareup.retrofit2:retrofit:2.1.0'
     integrationTestCompile 'com.squareup.retrofit2:converter-jackson:2.1.0'
+    integrationTestCompile 'com.squareup.retrofit2:converter-scalars:2.1.0'
     integrationTestCompile 'org.mockito:mockito-core:2.0.93-beta'
+    integrationTestCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 }
